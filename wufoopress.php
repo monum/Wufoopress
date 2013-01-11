@@ -28,7 +28,7 @@ License: be_nice
     // got wufoo form entries
     
     require_once('lib/wufoo/WufooApiWrapper.php');
-    $wrapper = new WufooApiWrapper('**API KEY**', '**Subdomain**'); //create the class
+    $wrapper = new WufooApiWrapper('**API KEY**', '**Subdomain**'); //create the instance of the class
     $entries = $wrapper->getEntries('**form hash**', 'forms', $WufooIDFilter );
     $fields = $wrapper->getFields('**form hash**', 'forms');
 
@@ -61,7 +61,17 @@ License: be_nice
     {
         $content['title'] = $app->Field1." ". $app->Field2;
         
+        $content['description'] =
+            "<p><h3>Email</h3><p>".$app->Field9."</p>
+            <p><h3>Role</h3><p>".$app->Field11." ".$app->Field12."    ".$app->Field13."</p>
+            <p><h3>LinkedIn Profile URL</h3><p>".$app->Field117."</p>
+            <p><h3>Essay</h3><p>".$app->Field434."</p>
+            <p><h3>Essay</h3><p>".$app->Field435."</p>
+            <p><h3>Education</h3><p>".$app->Field432."</p>
+            ";
+        
         //description is the post text, which is where most of the fields will go
+        /*
         $content['description'] =  
                 "<h3>Email</h3><p>".$app->Field3."</p>
                 <h3>Phone Number</h3><p>".$app->Field4."</p>
@@ -80,19 +90,23 @@ License: be_nice
                 <h3>URL for Project 2</h3><p>".$app->Field234."</p>
                 <h3>Please describe your role and impact on this project in under 140 characters.</h3><p>".$app->Field231."</p>
                 <h3>How did you hear about Code for America?</h3><p>".$app->Field255."</p>";
+        
        
         $content['mt_excerpt'] = "<p>".$app->Field366."</p>";
+        */
         
         $content['custom_fields'] = array(
             	array( 'key' => 'WufooID', 'value' => $app->EntryId )
             	);
         
         //get and format the categories, eliminating empty values
-        $categories = array($app->Field257, $app->Field259, $app->Field258,     $app->Field260, $app->Field261, $app->Field262, $app->Field262, $app->Field264, $app->Field265);
+        /*
+        $categories = array($app->Field257, $app->Field259, $app->Field258, $app->Field260, $app->Field261, $app->Field262, $app->Field262, $app->Field264, $app->Field265);
         $cats = array_remove_empty($categories);
         usort($cats);
         $content['categories'] = $cats;
- 
+        */
+        
         //POST THEM!
         $client->query('metaWeblog.newPost', '', '**WP username**', '**pass**', $content, true);
 
